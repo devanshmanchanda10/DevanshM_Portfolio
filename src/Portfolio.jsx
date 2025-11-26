@@ -424,28 +424,28 @@ const ProjectCard = ({ title, tags, description, metrics, link, icon, color }) =
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
+    <div className="bg-white/80 backdrop-blur-sm p-6 rounded-3xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
       <div className="flex justify-between items-start mb-4">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, i) => (
-            <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+            <span key={i} className="px-2.5 py-1 bg-slate-100 text-slate-600 text-[11px] font-semibold rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
               {tag}
             </span>
           ))}
         </div>
         {icon && (
-          <div className={`p-3 rounded-xl ${colorClasses[color] || 'bg-blue-100/50 text-blue-700'} transition-transform duration-300 group-hover:scale-110`}>
+          <div className={`p-2.5 rounded-2xl ${colorClasses[color] || 'bg-blue-100/50 text-blue-700'} transition-transform duration-300 group-hover:scale-110`}>
             {icon}
           </div>
         )}
       </div>
 
-      <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
-      <p className="text-slate-600 mb-6 leading-relaxed flex-grow">{description}</p>
-      <div className="bg-slate-50/50 rounded-xl p-5 space-y-3 border border-slate-100 mt-auto mb-6">
+      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">{title}</h3>
+      <p className="text-slate-600 text-sm mb-4 leading-relaxed flex-grow">{description}</p>
+      <div className="bg-slate-50/50 rounded-2xl p-4 space-y-2 border border-slate-100 mt-auto mb-4">
         {metrics.map((metric, idx) => (
           <div key={idx} className="flex items-center text-sm font-medium text-slate-700">
-            <Zap size={16} className="text-amber-500 mr-3 fill-current" />
+            <Zap size={14} className="text-amber-500 mr-2.5 fill-current" />
             {metric}
           </div>
         ))}
@@ -456,9 +456,9 @@ const ProjectCard = ({ title, tags, description, metrics, link, icon, color }) =
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-full px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
+          className="inline-flex items-center justify-center w-full px-5 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-2xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
         >
-          View Project <ArrowRight size={18} className="ml-2" />
+          View Project <ArrowRight size={16} className="ml-2" />
         </a>
       )}
     </div>
@@ -466,9 +466,9 @@ const ProjectCard = ({ title, tags, description, metrics, link, icon, color }) =
 };
 
 const SkillCategory = ({ icon, title, skills }) => (
-  <div className="p-8 bg-white/60 backdrop-blur-md rounded-2xl border border-slate-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
-    <div className="flex items-center mb-6">
-      <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 mr-4">
+  <div className="p-6 bg-white/60 backdrop-blur-md rounded-3xl border border-slate-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
+    <div className="flex items-center mb-4">
+      <div className="p-2.5 bg-white rounded-2xl shadow-sm border border-slate-100 mr-3">
         {icon}
       </div>
       <h3 className="font-bold text-lg text-slate-900">{title}</h3>
@@ -496,7 +496,7 @@ const TimelineItem = ({ title, org, period, details }) => (
 );
 
 const LeadershipCard = ({ role, org, desc }) => (
-  <div className="flex items-start p-5 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+  <div className="flex items-start p-5 bg-white/70 backdrop-blur-sm rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
     <div className="min-w-0">
       <div className="flex justify-between items-center mb-1">
         <h4 className="font-bold text-slate-900 text-base">{role}</h4>
