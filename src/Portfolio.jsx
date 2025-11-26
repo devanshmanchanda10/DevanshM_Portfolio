@@ -123,9 +123,9 @@ const Portfolio = () => {
               </h1>
 
               <p className="text-lg text-slate-600 leading-relaxed mb-8 font-light">
-                Building products that <span className="font-semibold text-slate-900">solve real problems</span>.
+                Solving real world problems <span className="font-semibold text-slate-900">to create real impact</span>.
                 <br /><br />
-                I blend <span className="bg-blue-50 text-blue-700 px-1 rounded font-medium">product sense</span> with <span className="bg-purple-50 text-purple-700 px-1 rounded font-medium">analytical depth</span> to drive growth in Fintech & EdTech.
+                Blending <span className="bg-blue-50 text-blue-700 px-1 rounded font-medium">product sense</span> with <span className="bg-purple-50 text-purple-700 px-1 rounded font-medium">analytical knowledge</span> to give best user experience.
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
