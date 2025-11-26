@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Briefcase,
   GraduationCap,
@@ -11,22 +11,22 @@ import {
   BarChart2,
   Users,
   Zap,
-  Layout,
   Database,
   Search,
+  Layout,
   MousePointer2,
-  ArrowUpRight
+  ArrowRight
 } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const containerRef = useRef(null);
 
+  // Handle scroll effects
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
       const sections = ['home', 'experience', 'projects', 'skills', 'education'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
@@ -39,22 +39,8 @@ const Portfolio = () => {
       if (current) setActiveSection(current);
     };
 
-    const handleMouseMove = (e) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
-      }
-    };
-
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (id) => {
@@ -65,157 +51,163 @@ const Portfolio = () => {
     }
   };
 
+  const NavLink = ({ id, label }) => (
+    <button
+      onClick={() => scrollToSection(id)}
+      className={`text-sm font-medium transition-all duration-300 relative px-2 ${activeSection === id
+          ? 'text-blue-600'
+          : 'text-slate-600 hover:text-blue-500'
+        }`}
+    >
+      {label}
+      {activeSection === id && (
+        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 rounded-full animate-fade-in" />
+      )}
+    </button>
+  );
+
   return (
-    <div ref={containerRef} className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900 relative overflow-hidden">
+    <div className="min-h-screen font-sans text-slate-800 selection:bg-indigo-100 selection:text-indigo-900 relative overflow-hidden">
 
-      {/* --- MOUSE SPOTLIGHT --- */}
-      <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(29, 78, 216, 0.05), transparent 40%)`
-        }}
-      />
-
-      {/* --- DYNAMIC BACKGROUND --- */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-slate-50">
-        {/* Vivid Gradient Blobs */}
-        <div className="absolute -top-[10%] -left-[10%] w-[500px] h-[500px] bg-blue-400/40 rounded-full blur-[100px] animate-blob mix-blend-multiply filter"></div>
-        <div className="absolute top-[10%] -right-[10%] w-[500px] h-[500px] bg-purple-400/40 rounded-full blur-[100px] animate-blob [animation-delay:2s] mix-blend-multiply filter"></div>
-        <div className="absolute -bottom-[20%] left-[20%] w-[600px] h-[600px] bg-indigo-400/40 rounded-full blur-[100px] animate-blob [animation-delay:4s] mix-blend-multiply filter"></div>
-        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-pink-300/30 rounded-full blur-[100px] animate-blob [animation-delay:6s] mix-blend-multiply filter"></div>
-
-        {/* Noise Texture Overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
-
-        {/* Grid Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      {/* --- BACKGROUND ELEMENTS --- */}
+      <div className="fixed inset-0 z-[-1] bg-slate-50">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       </div>
 
-      {/* --- NAVIGATION --- */}
-      <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${isScrolled ? 'w-[90%] max-w-2xl' : 'w-[95%] max-w-5xl'
+      <div className="fixed top-0 -left-4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob z-[-1]"></div>
+      <div className="fixed top-0 -right-4 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 z-[-1]"></div>
+      <div className="fixed -bottom-8 left-20 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000 z-[-1]"></div>
+
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${isScrolled
+          ? 'bg-white/80 backdrop-blur-md border-slate-200/50 py-4 shadow-sm'
+          : 'bg-transparent border-transparent py-6'
         }`}>
-        <div className={`backdrop-blur-xl border border-white/40 shadow-lg shadow-slate-200/50 rounded-full px-6 py-3 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'bg-white/90' : 'bg-white/60'
-          }`}>
-          <div className="font-display font-bold text-xl tracking-tight text-slate-900 flex items-center">
+        <div className="container mx-auto px-6 max-w-7xl flex justify-between items-center">
+          <div className="font-bold text-2xl tracking-tighter text-slate-900 flex items-center">
             DM<span className="text-blue-600">.</span>
           </div>
-
-          <div className="hidden md:flex items-center space-x-1 bg-slate-100/50 rounded-full p-1">
-            {['home', 'experience', 'projects', 'skills'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 capitalize ${activeSection === item
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-900'
-                  }`}
-              >
-                {item}
-              </button>
-            ))}
+          <div className="hidden md:flex space-x-8">
+            <NavLink id="home" label="Overview" />
+            <NavLink id="projects" label="Projects" />
+            <NavLink id="skills" label="Skills" />
+            <NavLink id="education" label="Education" />
           </div>
-
           <button
             onClick={() => window.open('mailto:manchandadevansh10@gmail.com')}
-            className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-colors shadow-lg shadow-slate-900/20"
+            className="px-5 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-full hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5"
           >
-            Let's Talk
+            Contact Me
           </button>
         </div>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section id="home" className="pt-28 pb-12 md:pt-32 md:pb-16 px-6 relative z-10">
-        <div className="container mx-auto max-w-5xl text-center">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold tracking-wide uppercase mb-6 animate-fade-in-up">
-            <span className="w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-            Aspiring Product Manager
-          </div>
+      {/* --- COMBINED HERO & EXPERIENCE SECTION --- */}
+      {/* This section puts Intro on Left, Experience on Right immediately */}
+      <section id="home" className="pt-28 pb-12 px-6 relative min-h-screen flex flex-col justify-center">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1.1] mb-6 tracking-tight animate-fade-in-up [animation-delay:100ms]">
-            Solving real problems <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
-              with real impact.
-            </span>
-          </h1>
+            {/* LEFT COLUMN: INTRO (Sticky on Desktop) */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-slate-200 text-blue-700 text-sm font-semibold mb-6 shadow-sm">
+                <span className="relative flex h-2.5 w-2.5 mr-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+                </span>
+                Aspiring Product Manager
+              </div>
 
-          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto font-light animate-fade-in-up [animation-delay:200ms]">
-            Hi, I'm <strong className="text-slate-900 font-semibold">Devansh</strong>.
-            I blend <span className="text-blue-600 font-medium">product sense</span> with <span className="text-purple-600 font-medium">analytical depth</span> to build experiences that users love and businesses value.
-          </p>
+              <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                Devansh <br /> Manchanda
+              </h1>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up [animation-delay:300ms]">
-            <button
-              onClick={() => scrollToSection('experience')}
-              className="group flex items-center justify-center px-8 py-3 bg-slate-900 text-white rounded-2xl font-semibold hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20 hover:shadow-blue-600/30 hover:-translate-y-1"
-            >
-              See My Work
-              <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+              <p className="text-lg text-slate-600 leading-relaxed mb-8 font-light">
+                Building products that <span className="font-semibold text-slate-900">solve real problems</span>.
+                <br /><br />
+                I blend <span className="bg-blue-50 text-blue-700 px-1 rounded font-medium">product sense</span> with <span className="bg-purple-50 text-purple-700 px-1 rounded font-medium">analytical depth</span> to drive growth in Fintech & EdTech.
+              </p>
 
-            <div className="flex justify-center gap-3">
-              <SocialButton href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" icon={<Linkedin size={20} />} label="LinkedIn" />
-              <SocialButton href="mailto:manchandadevansh10@gmail.com" icon={<Mail size={20} />} label="Email" />
+              <div className="flex flex-wrap gap-4 mb-8">
+                <button
+                  onClick={() => scrollToSection('projects')}
+                  className="group flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-xl shadow-blue-500/20 hover:shadow-blue-600/40"
+                >
+                  View Projects
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <div className="flex gap-2">
+                  <SocialIcon href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" icon={<Linkedin size={20} />} label="LinkedIn" />
+                  <SocialIcon href="mailto:manchandadevansh10@gmail.com" icon={<Mail size={20} />} label="Email" />
+                </div>
+              </div>
+
+              <div className="border-t border-slate-200/60 pt-6 space-y-3 text-sm text-slate-500 font-medium">
+                <div className="flex items-center"><MapPin size={16} className="mr-3 text-blue-500" /> Gurugram, India</div>
+                <div className="flex items-center"><Phone size={16} className="mr-3 text-blue-500" /> +91 9821182683</div>
+                <div className="flex items-center"><MousePointer2 size={16} className="mr-3 text-blue-500" /> manchandadevansh10@gmail.com</div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: EXPERIENCE (Immediate View) */}
+            <div id="experience" className="lg:col-span-7 space-y-6 pt-2 lg:pt-0">
+              <div className="flex items-center mb-4">
+                <h2 className="text-2xl font-bold text-slate-900">Work Experience</h2>
+                <div className="h-px bg-slate-200 flex-grow ml-4"></div>
+              </div>
+
+              <ExperienceCard
+                role="Product Manager Intern"
+                company="CashKaro.com"
+                period="June - Nov 2025"
+                type="Fintech"
+                gradient="from-yellow-500 to-orange-500"
+                icon={<Zap className="w-5 h-5 text-white" />}
+                achievements={[
+                  "Optimized funnel health by tracking sign-ups, activation, and payment KPIs using Power BI & AWS Redshift.",
+                  "Revamped a 3-screen onboarding flow after competitor analysis, increasing signups by 1%.",
+                  "Authored PRDs for stakeholders to streamline development of new onboarding features."
+                ]}
+              />
+
+              <ExperienceCard
+                role="Business Research Intern"
+                company="Ken Research"
+                period="Feb - April 2025"
+                type="Consulting"
+                gradient="from-blue-500 to-cyan-500"
+                icon={<BarChart2 className="w-5 h-5 text-white" />}
+                achievements={[
+                  "Analyzed EV adoption trends by surveying 200+ users across 3 cities and researching 100+ vehicles.",
+                  "Supported GTM strategy for a Dubai-based client (AWR Group) through rigorous secondary research."
+                ]}
+              />
+
+              <ExperienceCard
+                role="Growth Intern"
+                company="BeyondTech"
+                period="Earlier 2025"
+                type="EdTech"
+                gradient="from-emerald-500 to-green-500"
+                icon={<Users className="w-5 h-5 text-white" />}
+                achievements={[
+                  "Generated 200+ Tier-1 college leads via embedded CTAs; converted 20% into paid users.",
+                  "Executed LinkedIn content strategy that significantly boosted post engagement."
+                ]}
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* --- EXPERIENCE SECTION --- */}
-      <section id="experience" className="py-24 relative z-10">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <SectionHeader title="Work Experience" subtitle="My Journey" />
-
-          <div className="grid gap-8">
-            <ExperienceCard
-              role="Product Manager Intern"
-              company="CashKaro.com"
-              period="June - Nov 2025"
-              type="Fintech"
-              color="blue"
-              icon={<Zap className="w-5 h-5" />}
-              achievements={[
-                "Optimized funnel health by tracking sign-ups, activation, and payment KPIs using Power BI & AWS Redshift.",
-                "Revamped a 3-screen onboarding flow after competitor analysis, increasing signups by 1%.",
-                "Authored PRDs for stakeholders to streamline development of new onboarding features."
-              ]}
-            />
-
-            <ExperienceCard
-              role="Business Research Intern"
-              company="Ken Research"
-              period="Feb - April 2025"
-              type="Consulting"
-              color="indigo"
-              icon={<BarChart2 className="w-5 h-5" />}
-              achievements={[
-                "Analyzed EV adoption trends by surveying 200+ users across 3 cities and researching 100+ vehicles.",
-                "Supported GTM strategy for a Dubai-based client (AWR Group) through rigorous secondary research."
-              ]}
-            />
-
-            <ExperienceCard
-              role="Growth Intern"
-              company="BeyondTech"
-              period="Earlier 2025"
-              type="EdTech"
-              color="emerald"
-              icon={<Users className="w-5 h-5" />}
-              achievements={[
-                "Generated 200+ Tier-1 college leads via embedded CTAs; converted 20% into paid users.",
-                "Executed LinkedIn content strategy that significantly boosted post engagement."
-              ]}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* --- PROJECTS SECTION --- */}
-      <section id="projects" className="py-24 bg-slate-50/50 relative z-10">
-        <div className="container mx-auto px-6 max-w-5xl">
+      {/* Projects Section */}
+      <section id="projects" className="py-24 relative">
+        <div className="absolute inset-0 bg-white/40 skew-y-1 transform origin-top-left -z-10"></div>
+        <div className="container mx-auto px-6 max-w-6xl">
           <SectionHeader title="Featured Projects" subtitle="Problem Solving" />
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             <ProjectCard
               title="Swiggy Instamart Improvement"
               tags={['User Research', 'PRD', 'North Star Metric']}
@@ -224,7 +216,6 @@ const Portfolio = () => {
                 "Surveyed 50+ users to identify 4 key pain points",
                 "Prioritized 3 features focused on personalization"
               ]}
-              link="https://drive.google.com/file/d/1cJjD2zO-NI1hJcMyLcZtfVPGV5iGZJVi/view?usp=sharing"
             />
 
             <ProjectCard
@@ -235,7 +226,6 @@ const Portfolio = () => {
                 "Automated PRD generation from raw inputs",
                 "Enabled instant prototyping on Replit via AI prompts"
               ]}
-              link="https://www.notion.so/PRD_TO_MVP-264177a4ce80806b87f4ef11d9af982a?source=copy_link"
             />
 
             <ProjectCard
@@ -251,12 +241,12 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* --- SKILLS SECTION --- */}
-      <section id="skills" className="py-24 relative z-10">
-        <div className="container mx-auto px-6 max-w-5xl">
+      {/* Skills Section */}
+      <section id="skills" className="py-24">
+        <div className="container mx-auto px-6 max-w-6xl">
           <SectionHeader title="Technical Arsenal" subtitle="Skills & Tools" />
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             <SkillCategory
               icon={<Layout className="w-6 h-6 text-purple-600" />}
               title="Product Strategy"
@@ -276,15 +266,16 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* --- EDUCATION & LEADERSHIP --- */}
-      <section id="education" className="py-24 relative z-10">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="grid md:grid-cols-2 gap-16">
+      {/* Education & POR */}
+      <section id="education" className="py-24 relative">
+        <div className="absolute inset-0 bg-slate-50/50 -z-10"></div>
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="font-display text-2xl font-bold mb-8 flex items-center text-slate-900">
-                <span className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
-                  <GraduationCap size={20} />
-                </span>
+              <h3 className="text-2xl font-bold mb-8 flex items-center text-slate-900">
+                <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                  <GraduationCap className="text-blue-600 w-6 h-6" />
+                </div>
                 Education
               </h3>
               <div className="space-y-8 border-l-2 border-slate-200 ml-4 pl-8 relative">
@@ -304,13 +295,13 @@ const Portfolio = () => {
             </div>
 
             <div>
-              <h3 className="font-display text-2xl font-bold mb-8 flex items-center text-slate-900">
-                <span className="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mr-3">
-                  <Briefcase size={20} />
-                </span>
+              <h3 className="text-2xl font-bold mb-8 flex items-center text-slate-900">
+                <div className="p-2 bg-purple-100 rounded-lg mr-3">
+                  <Briefcase className="text-purple-600 w-6 h-6" />
+                </div>
                 Leadership
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <LeadershipCard
                   role="PR & Ops Head"
                   org="Moksha'24 (NSUT)"
@@ -332,128 +323,107 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
-      <footer className="bg-slate-950 text-slate-400 py-20 border-t border-slate-900 relative z-10">
-        <div className="container mx-auto px-6 max-w-5xl text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-8">Let's build something great.</h2>
-          <div className="flex justify-center gap-6 mb-12">
-            <a href="mailto:manchandadevansh10@gmail.com" className="text-slate-400 hover:text-white transition-colors">Email</a>
-            <a href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
-            <a href="https://drive.google.com/file/d/1p_kU5biULGlgfkJzWTMwharAo3bevFde/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Resume</a>
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-300 py-16 border-t border-slate-800 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500"></div>
+
+        <div className="container mx-auto px-6 max-w-5xl text-center relative z-10">
+          <h2 className="text-3xl font-bold text-white mb-6">Let's build something great together.</h2>
+          <div className="flex justify-center gap-8 mb-10">
+            <a href="mailto:manchandadevansh10@gmail.com" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Email</a>
+            <a href="#" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">LinkedIn</a>
+            <a href="#" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Resume</a>
           </div>
-          <p className="text-sm font-medium opacity-60">
+          <p className="text-slate-600 text-sm">
             © {new Date().getFullYear()} Devansh Manchanda.
           </p>
         </div>
       </footer>
-    </div >
+    </div>
   );
 };
 
 // --- SUB COMPONENTS ---
 
-const SocialButton = ({ href, icon, label }) => (
+const SocialIcon = ({ href, icon, label }) => (
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="p-4 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10 transition-all hover:-translate-y-1"
+    className="p-2.5 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-lg text-slate-600 hover:text-blue-600 hover:border-blue-300 hover:shadow-md transition-all transform hover:-translate-y-0.5"
   >
     {icon}
   </a>
 );
 
 const SectionHeader = ({ title, subtitle }) => (
-  <div className="mb-16">
-    <span className="inline-block px-3 py-1 bg-white/50 backdrop-blur-md border border-white/60 text-slate-600 font-bold tracking-wide text-xs uppercase rounded-full mb-4 shadow-sm">{subtitle}</span>
-    <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">{title}</h2>
+  <div className="mb-16 text-center md:text-left">
+    <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 font-semibold tracking-wide text-xs uppercase rounded-full mb-3 border border-blue-100">{subtitle}</span>
+    <h2 className="text-4xl font-bold text-slate-900 tracking-tight">{title}</h2>
   </div>
 );
 
-const ExperienceCard = ({ role, company, period, type, achievements, icon, color }) => {
-  const colorClasses = {
-    blue: 'bg-blue-100/50 text-blue-700',
-    indigo: 'bg-indigo-100/50 text-indigo-700',
-    emerald: 'bg-emerald-100/50 text-emerald-700',
-  };
-
-  return (
-    <div className="group relative bg-white/60 backdrop-blur-lg p-8 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
-      <div className="flex flex-col md:flex-row md:items-start gap-6 mb-6">
-        <div className={`p-4 rounded-2xl ${colorClasses[color]} group-hover:scale-110 transition-transform duration-300 shadow-inner`}>
+const ExperienceCard = ({ role, company, period, type, achievements, icon, gradient }) => (
+  <div className="group relative bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/60 hover:border-blue-300/50 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300">
+    <div className="flex justify-between items-start mb-4">
+      <div className="flex items-center gap-4">
+        <div className={`p-3 rounded-xl bg-gradient-to-br ${gradient} shadow-lg shadow-gray-200`}>
           {icon}
         </div>
-        <div className="flex-1">
-          <div className="flex flex-wrap justify-between items-start gap-2">
-            <div>
-              <h3 className="font-display text-xl font-bold text-slate-900">{role}</h3>
-              <div className="text-slate-600 font-medium mt-1">{company}</div>
-            </div>
-            <span className="text-xs font-bold px-3 py-1 bg-white/50 border border-white/60 text-slate-500 rounded-full">{period}</span>
+        <div>
+          <h3 className="text-lg font-bold text-slate-900 leading-tight">{role}</h3>
+          <div className="text-slate-500 font-medium text-sm mt-0.5">
+            {company} <span className="text-slate-300 mx-1">•</span> {period}
           </div>
         </div>
       </div>
-      <ul className="space-y-3 mb-6">
-        {achievements.map((item, idx) => (
-          <li key={idx} className="flex items-start text-slate-700 leading-relaxed text-sm md:text-base">
-            <span className="mt-2 mr-3 w-1.5 h-1.5 bg-blue-400/60 rounded-full flex-shrink-0 group-hover:bg-blue-600 transition-colors" />
-            {item}
-          </li>
-        ))}
-      </ul>
-      <div className="pt-6 border-t border-slate-200/50 flex items-center justify-between">
-        <span className="text-[10px] font-bold px-3 py-1 bg-slate-100/50 text-slate-500 rounded-full uppercase tracking-wider">{type}</span>
-      </div>
+      <span className="text-[10px] font-bold px-2 py-1 bg-slate-100 text-slate-500 rounded-full uppercase tracking-wider hidden sm:block">{type}</span>
     </div>
-  );
-};
+    <ul className="space-y-3">
+      {achievements.map((item, idx) => (
+        <li key={idx} className="flex items-start text-slate-600 text-sm leading-relaxed">
+          <span className="mt-2 mr-2.5 w-1 h-1 bg-blue-400 rounded-full flex-shrink-0" />
+          {item}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
-const ProjectCard = ({ title, tags, description, metrics, link }) => (
-  <div className="bg-white/60 backdrop-blur-lg p-8 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
-    <div className="flex flex-wrap gap-2 mb-6">
+const ProjectCard = ({ title, tags, description, metrics }) => (
+  <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
+    <div className="flex flex-wrap gap-2 mb-4">
       {tags.map((tag, i) => (
-        <span key={i} className="px-3 py-1 bg-white/50 text-slate-600 text-xs font-bold rounded-lg border border-white/60 shadow-sm">
+        <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
           {tag}
         </span>
       ))}
     </div>
-    <h3 className="font-display text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
-    <p className="text-slate-600 mb-8 leading-relaxed flex-grow">{description}</p>
-
-    <div className="bg-slate-50/50 rounded-2xl p-5 space-y-3 mb-8 border border-slate-100/50">
+    <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
+    <p className="text-slate-600 mb-6 leading-relaxed flex-grow">{description}</p>
+    <div className="bg-slate-50/50 rounded-xl p-5 space-y-3 border border-slate-100 mt-auto">
       {metrics.map((metric, idx) => (
-        <div key={idx} className="flex items-start text-sm font-medium text-slate-700">
-          <Zap size={16} className="text-amber-500 mr-3 mt-0.5 fill-current flex-shrink-0" />
+        <div key={idx} className="flex items-center text-sm font-medium text-slate-700">
+          <Zap size={16} className="text-amber-500 mr-3 fill-current" />
           {metric}
         </div>
       ))}
     </div>
-
-    {link && (
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center w-full px-6 py-3.5 bg-slate-900 text-white font-semibold rounded-xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
-      >
-        View Project <ArrowUpRight size={18} className="ml-2" />
-      </a>
-    )}
   </div>
 );
 
 const SkillCategory = ({ icon, title, skills }) => (
-  <div className="p-8 bg-white/60 backdrop-blur-lg rounded-3xl border border-white/60 hover:border-blue-300/50 hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
+  <div className="p-8 bg-white/60 backdrop-blur-md rounded-2xl border border-slate-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
     <div className="flex items-center mb-6">
-      <div className="p-3 bg-white/80 rounded-xl mr-4 text-slate-900 shadow-sm">
+      <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 mr-4">
         {icon}
       </div>
-      <h3 className="font-display font-bold text-lg text-slate-900">{title}</h3>
+      <h3 className="font-bold text-lg text-slate-900">{title}</h3>
     </div>
     <div className="flex flex-wrap gap-2">
       {skills.map((skill, i) => (
-        <span key={i} className="px-3 py-1.5 bg-white/40 border border-white/60 text-slate-700 text-sm font-medium rounded-lg hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all cursor-default shadow-sm">
+        <span key={i} className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm font-medium rounded-lg hover:border-blue-300 hover:text-blue-600 transition-colors cursor-default">
           {skill}
         </span>
       ))}
@@ -463,26 +433,26 @@ const SkillCategory = ({ icon, title, skills }) => (
 
 const TimelineItem = ({ title, org, period, details }) => (
   <div className="relative group">
-    <div className="absolute -left-[41px] top-1.5 h-5 w-5 rounded-full border-4 border-white bg-slate-200 group-hover:bg-blue-600 transition-colors shadow-sm" />
-    <h4 className="font-display font-bold text-slate-900 text-lg">{title}</h4>
-    <p className="text-slate-600 font-medium mb-2">{org}</p>
-    <div className="flex items-center gap-3 text-sm">
-      <span className="text-slate-400">{period}</span>
-      <span className="font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">{details}</span>
+    <div className="absolute -left-[45px] top-1 h-6 w-6 rounded-full border-4 border-white bg-slate-300 group-hover:bg-blue-600 transition-colors shadow-sm" />
+    <h4 className="font-bold text-slate-900 text-lg">{title}</h4>
+    <p className="text-slate-600 font-medium">{org}</p>
+    <div className="flex justify-between items-center mt-2 text-sm text-slate-500">
+      <span>{period}</span>
+      <span className="font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">{details}</span>
     </div>
   </div>
 );
 
 const LeadershipCard = ({ role, org, desc }) => (
-  <div className="p-6 bg-white/60 backdrop-blur-lg rounded-2xl border border-white/60 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-900/10 transition-all hover:-translate-y-1">
-    <div className="flex justify-between items-start mb-2">
-      <div>
-        <h4 className="font-display font-bold text-slate-900">{role}</h4>
-        <p className="text-blue-600 text-xs font-bold uppercase tracking-wide mt-1">{org}</p>
+  <div className="flex items-start p-5 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+    <div className="min-w-0">
+      <div className="flex justify-between items-center mb-1">
+        <h4 className="font-bold text-slate-900 text-base">{role}</h4>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-slate-200 px-2 rounded-full">POR</span>
       </div>
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-white/50 border border-white/60 px-2 py-1 rounded-lg">POR</span>
+      <p className="text-blue-600 text-xs font-bold mb-3 uppercase tracking-wide">{org}</p>
+      <p className="text-slate-600 text-sm leading-relaxed">{desc}</p>
     </div>
-    <p className="text-slate-600 text-sm leading-relaxed mt-3">{desc}</p>
   </div>
 );
 
