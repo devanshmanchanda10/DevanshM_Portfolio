@@ -55,8 +55,8 @@ const Portfolio = () => {
     <button
       onClick={() => scrollToSection(id)}
       className={`text-sm font-medium transition-all duration-300 relative px-2 ${activeSection === id
-          ? 'text-blue-600'
-          : 'text-slate-600 hover:text-blue-500'
+        ? 'text-blue-600'
+        : 'text-slate-600 hover:text-blue-500'
         }`}
     >
       {label}
@@ -82,8 +82,8 @@ const Portfolio = () => {
 
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${isScrolled
-          ? 'bg-white/80 backdrop-blur-md border-slate-200/50 py-4 shadow-sm'
-          : 'bg-transparent border-transparent py-6'
+        ? 'bg-white/80 backdrop-blur-md border-slate-200/50 py-4 shadow-sm'
+        : 'bg-transparent border-transparent py-6'
         }`}>
         <div className="container mx-auto px-6 max-w-5xl flex justify-between items-center">
           <div className="font-bold text-2xl tracking-tighter text-slate-900 flex items-center">
@@ -217,7 +217,7 @@ const Portfolio = () => {
                 "Surveyed 50+ users to identify 4 key pain points",
                 "Prioritized 3 features focused on personalization"
               ]}
-              link="https://example.com"
+              link="https://drive.google.com/file/d/1cJjD2zO-NI1hJcMyLcZtfVPGV5iGZJVi/view?usp=sharing"
             />
 
             <ProjectCard
@@ -228,7 +228,7 @@ const Portfolio = () => {
                 "Automated PRD generation from raw inputs",
                 "Enabled instant prototyping on Replit via AI prompts"
               ]}
-              link="https://example.com"
+              link="https://www.notion.so/PRD_TO_MVP-264177a4ce80806b87f4ef11d9af982a?source=copy_link"
             />
 
             <ProjectCard
