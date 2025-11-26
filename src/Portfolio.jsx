@@ -15,7 +15,13 @@ import {
   Search,
   Layout,
   MousePointer2,
-  ArrowRight
+  ArrowRight,
+  Smartphone,
+  Globe,
+  TrendingUp,
+  ShoppingBag,
+  Bot,
+  PieChart
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -163,7 +169,7 @@ const Portfolio = () => {
                 period="June - Nov 2025"
                 type="Fintech"
                 color="blue"
-                icon={<Zap className="w-5 h-5" />}
+                icon={<Smartphone className="w-5 h-5" />}
                 achievements={[
                   "Optimized funnel health by tracking sign-ups, activation, and payment KPIs using Power BI & AWS Redshift.",
                   "Revamped a 3-screen onboarding flow after competitor analysis, increasing signups by 1%.",
@@ -177,7 +183,7 @@ const Portfolio = () => {
                 period="Feb - April 2025"
                 type="Consulting"
                 color="indigo"
-                icon={<BarChart2 className="w-5 h-5" />}
+                icon={<Globe className="w-5 h-5" />}
                 achievements={[
                   "Analyzed EV adoption trends by surveying 200+ users across 3 cities and researching 100+ vehicles.",
                   "Supported GTM strategy for a Dubai-based client (AWR Group) through rigorous secondary research."
@@ -190,7 +196,7 @@ const Portfolio = () => {
                 period="Earlier 2025"
                 type="EdTech"
                 color="emerald"
-                icon={<Users className="w-5 h-5" />}
+                icon={<TrendingUp className="w-5 h-5" />}
                 achievements={[
                   "Generated 200+ Tier-1 college leads via embedded CTAs; converted 20% into paid users.",
                   "Executed LinkedIn content strategy that significantly boosted post engagement."
@@ -217,6 +223,8 @@ const Portfolio = () => {
                 "Prioritized 3 features focused on personalization"
               ]}
               link="https://drive.google.com/file/d/1cJjD2zO-NI1hJcMyLcZtfVPGV5iGZJVi/view?usp=sharing"
+              icon={<ShoppingBag className="w-6 h-6" />}
+              color="orange"
             />
 
             <ProjectCard
@@ -228,6 +236,8 @@ const Portfolio = () => {
                 "Enabled instant prototyping on Replit via AI prompts"
               ]}
               link="https://www.notion.so/PRD_TO_MVP-264177a4ce80806b87f4ef11d9af982a?source=copy_link"
+              icon={<Bot className="w-6 h-6" />}
+              color="purple"
             />
 
             <ProjectCard
@@ -238,6 +248,8 @@ const Portfolio = () => {
                 "Identified inflated labor & delivery costs",
                 "Pitched promo strategy to unlock margin boost"
               ]}
+              icon={<PieChart className="w-6 h-6" />}
+              color="rose"
             />
           </div>
         </div>
@@ -404,38 +416,54 @@ const ExperienceCard = ({ role, company, period, type, achievements, icon, color
   );
 };
 
-const ProjectCard = ({ title, tags, description, metrics, link }) => (
-  <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
-    <div className="flex flex-wrap gap-2 mb-4">
-      {tags.map((tag, i) => (
-        <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
-          {tag}
-        </span>
-      ))}
-    </div>
-    <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
-    <p className="text-slate-600 mb-6 leading-relaxed flex-grow">{description}</p>
-    <div className="bg-slate-50/50 rounded-xl p-5 space-y-3 border border-slate-100 mt-auto mb-6">
-      {metrics.map((metric, idx) => (
-        <div key={idx} className="flex items-center text-sm font-medium text-slate-700">
-          <Zap size={16} className="text-amber-500 mr-3 fill-current" />
-          {metric}
-        </div>
-      ))}
-    </div>
+const ProjectCard = ({ title, tags, description, metrics, link, icon, color }) => {
+  const colorClasses = {
+    orange: 'bg-orange-100/50 text-orange-700',
+    purple: 'bg-purple-100/50 text-purple-700',
+    rose: 'bg-rose-100/50 text-rose-700',
+  };
 
-    {link && (
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center w-full px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
-      >
-        View Project <ArrowRight size={18} className="ml-2" />
-      </a>
-    )}
-  </div>
-);
+  return (
+    <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag, i) => (
+            <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+              {tag}
+            </span>
+          ))}
+        </div>
+        {icon && (
+          <div className={`p-3 rounded-xl ${colorClasses[color] || 'bg-blue-100/50 text-blue-700'} transition-transform duration-300 group-hover:scale-110`}>
+            {icon}
+          </div>
+        )}
+      </div>
+
+      <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
+      <p className="text-slate-600 mb-6 leading-relaxed flex-grow">{description}</p>
+      <div className="bg-slate-50/50 rounded-xl p-5 space-y-3 border border-slate-100 mt-auto mb-6">
+        {metrics.map((metric, idx) => (
+          <div key={idx} className="flex items-center text-sm font-medium text-slate-700">
+            <Zap size={16} className="text-amber-500 mr-3 fill-current" />
+            {metric}
+          </div>
+        ))}
+      </div>
+
+      {link && (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-full px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
+        >
+          View Project <ArrowRight size={18} className="ml-2" />
+        </a>
+      )}
+    </div>
+  );
+};
 
 const SkillCategory = ({ icon, title, skills }) => (
   <div className="p-8 bg-white/60 backdrop-blur-md rounded-2xl border border-slate-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
