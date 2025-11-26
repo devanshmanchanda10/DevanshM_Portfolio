@@ -409,6 +409,58 @@ const ExperienceCard = ({ role, company, period, type, achievements, icon, color
   );
 };
 
+const ProjectCard = ({ title, tags, description, metrics, link }) => (
+  <div className="bg-white/60 backdrop-blur-lg p-8 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+    <div className="flex flex-wrap gap-2 mb-6">
+      {tags.map((tag, i) => (
+        <span key={i} className="px-3 py-1 bg-white/50 text-slate-600 text-xs font-bold rounded-lg border border-white/60 shadow-sm">
+          {tag}
+        </span>
+      ))}
+    </div>
+    <h3 className="font-display text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{title}</h3>
+    <p className="text-slate-600 mb-8 leading-relaxed flex-grow">{description}</p>
+
+    <div className="bg-slate-50/50 rounded-2xl p-5 space-y-3 mb-8 border border-slate-100/50">
+      {metrics.map((metric, idx) => (
+        <div key={idx} className="flex items-start text-sm font-medium text-slate-700">
+          <Zap size={16} className="text-amber-500 mr-3 mt-0.5 fill-current flex-shrink-0" />
+          {metric}
+        </div>
+      ))}
+    </div>
+
+    {link && (
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center w-full px-6 py-3.5 bg-slate-900 text-white font-semibold rounded-xl hover:bg-blue-600 transition-all group-hover:shadow-lg group-hover:shadow-blue-500/20"
+      >
+        View Project <ArrowUpRight size={18} className="ml-2" />
+      </a>
+    )}
+  </div>
+);
+
+const SkillCategory = ({ icon, title, skills }) => (
+  <div className="p-8 bg-white/60 backdrop-blur-lg rounded-3xl border border-white/60 hover:border-blue-300/50 hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
+    <div className="flex items-center mb-6">
+      <div className="p-3 bg-white/80 rounded-xl mr-4 text-slate-900 shadow-sm">
+        {icon}
+      </div>
+      <h3 className="font-display font-bold text-lg text-slate-900">{title}</h3>
+    </div>
+    <div className="flex flex-wrap gap-2">
+      {skills.map((skill, i) => (
+        <span key={i} className="px-3 py-1.5 bg-white/40 border border-white/60 text-slate-700 text-sm font-medium rounded-lg hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all cursor-default shadow-sm">
+          {skill}
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
 const TimelineItem = ({ title, org, period, details }) => (
   <div className="relative group">
     <div className="absolute -left-[41px] top-1.5 h-5 w-5 rounded-full border-4 border-white bg-slate-200 group-hover:bg-blue-600 transition-colors shadow-sm" />
