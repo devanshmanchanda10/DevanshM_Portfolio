@@ -138,8 +138,8 @@ const Portfolio = () => {
                 </button>
 
                 <div className="flex gap-2">
-                  <SocialIcon href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" icon={<Linkedin size={20} />} label="LinkedIn" />
-                  <SocialIcon href="mailto:manchandadevansh10@gmail.com" icon={<Mail size={20} />} label="Email" />
+                  <SocialIcon href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" icon={<Linkedin size={24} />} label="LinkedIn" />
+                  <SocialIcon href="mailto:manchandadevansh10@gmail.com" icon={<Mail size={24} />} label="Email" />
                 </div>
               </div>
 
@@ -162,8 +162,8 @@ const Portfolio = () => {
                 company="CashKaro.com"
                 period="June - Nov 2025"
                 type="Fintech"
-                gradient="from-yellow-500 to-orange-500"
-                icon={<Zap className="w-5 h-5 text-white" />}
+                color="blue"
+                icon={<Zap className="w-5 h-5" />}
                 achievements={[
                   "Optimized funnel health by tracking sign-ups, activation, and payment KPIs using Power BI & AWS Redshift.",
                   "Revamped a 3-screen onboarding flow after competitor analysis, increasing signups by 1%.",
@@ -176,8 +176,8 @@ const Portfolio = () => {
                 company="Ken Research"
                 period="Feb - April 2025"
                 type="Consulting"
-                gradient="from-blue-500 to-cyan-500"
-                icon={<BarChart2 className="w-5 h-5 text-white" />}
+                color="indigo"
+                icon={<BarChart2 className="w-5 h-5" />}
                 achievements={[
                   "Analyzed EV adoption trends by surveying 200+ users across 3 cities and researching 100+ vehicles.",
                   "Supported GTM strategy for a Dubai-based client (AWR Group) through rigorous secondary research."
@@ -189,8 +189,8 @@ const Portfolio = () => {
                 company="BeyondTech"
                 period="Earlier 2025"
                 type="EdTech"
-                gradient="from-emerald-500 to-green-500"
-                icon={<Users className="w-5 h-5 text-white" />}
+                color="emerald"
+                icon={<Users className="w-5 h-5" />}
                 achievements={[
                   "Generated 200+ Tier-1 college leads via embedded CTAs; converted 20% into paid users.",
                   "Executed LinkedIn content strategy that significantly boosted post engagement."
@@ -333,7 +333,7 @@ const Portfolio = () => {
           <h2 className="text-3xl font-bold text-white mb-6">Let's build something great together.</h2>
           <div className="flex justify-center gap-8 mb-10">
             <a href="mailto:manchandadevansh10@gmail.com" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Email</a>
-            <a href="#" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">LinkedIn</a>
             <a href="https://drive.google.com/file/d/1p_kU5biULGlgfkJzWTMwharAo3bevFde/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Resume</a>
           </div>
           <p className="text-slate-600 text-sm">
@@ -353,7 +353,7 @@ const SocialIcon = ({ href, icon, label }) => (
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="p-2.5 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-lg text-slate-600 hover:text-blue-600 hover:border-blue-300 hover:shadow-md transition-all transform hover:-translate-y-0.5"
+    className="p-4 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10 transition-all hover:-translate-y-1"
   >
     {icon}
   </a>
@@ -366,32 +366,43 @@ const SectionHeader = ({ title, subtitle }) => (
   </div>
 );
 
-const ExperienceCard = ({ role, company, period, type, achievements, icon, gradient }) => (
-  <div className="group relative bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/60 hover:border-blue-300/50 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300">
-    <div className="flex justify-between items-start mb-4">
-      <div className="flex items-center gap-4">
-        <div className={`p-3 rounded-xl bg-gradient-to-br ${gradient} shadow-lg shadow-gray-200`}>
+const ExperienceCard = ({ role, company, period, type, achievements, icon, color }) => {
+  const colorClasses = {
+    blue: 'bg-blue-100/50 text-blue-700',
+    indigo: 'bg-indigo-100/50 text-indigo-700',
+    emerald: 'bg-emerald-100/50 text-emerald-700',
+  };
+
+  return (
+    <div className="group relative bg-white/60 backdrop-blur-lg p-8 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
+      <div className="flex flex-col md:flex-row md:items-start gap-6 mb-6">
+        <div className={`p-4 rounded-2xl ${colorClasses[color]} group-hover:scale-110 transition-transform duration-300 shadow-inner`}>
           {icon}
         </div>
-        <div>
-          <h3 className="text-lg font-bold text-slate-900 leading-tight">{role}</h3>
-          <div className="text-slate-500 font-medium text-sm mt-0.5">
-            {company} <span className="text-slate-300 mx-1">•</span> {period}
+        <div className="flex-1">
+          <div className="flex flex-wrap justify-between items-start gap-2">
+            <div>
+              <h3 className="font-display text-xl font-bold text-slate-900">{role}</h3>
+              <div className="text-slate-600 font-medium mt-1">{company}</div>
+            </div>
+            <span className="text-xs font-bold px-3 py-1 bg-white/50 border border-white/60 text-slate-500 rounded-full">{period}</span>
           </div>
         </div>
       </div>
-      <span className="text-[10px] font-bold px-2 py-1 bg-slate-100 text-slate-500 rounded-full uppercase tracking-wider hidden sm:block">{type}</span>
+      <ul className="space-y-3 mb-6">
+        {achievements.map((item, idx) => (
+          <li key={idx} className="flex items-start text-slate-700 leading-relaxed text-sm md:text-base">
+            <span className="mt-2 mr-3 w-1.5 h-1.5 bg-blue-400/60 rounded-full flex-shrink-0 group-hover:bg-blue-600 transition-colors" />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div className="pt-6 border-t border-slate-200/50 flex items-center justify-between">
+        <span className="text-[10px] font-bold px-3 py-1 bg-slate-100/50 text-slate-500 rounded-full uppercase tracking-wider">{type}</span>
+      </div>
     </div>
-    <ul className="space-y-3">
-      {achievements.map((item, idx) => (
-        <li key={idx} className="flex items-start text-slate-600 text-sm leading-relaxed">
-          <span className="mt-2 mr-2.5 w-1 h-1 bg-blue-400 rounded-full flex-shrink-0" />
-          {item}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+  );
+};
 
 const ProjectCard = ({ title, tags, description, metrics, link }) => (
   <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-xl hover:shadow-blue-900/5 group h-full flex flex-col">
