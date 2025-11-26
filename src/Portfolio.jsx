@@ -334,7 +334,7 @@ const Portfolio = () => {
           <div className="flex justify-center gap-8 mb-10">
             <a href="mailto:manchandadevansh10@gmail.com" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Email</a>
             <a href="#" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">LinkedIn</a>
-            <a href="#" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Resume</a>
+            <a href="https://drive.google.com/file/d/1p_kU5biULGlgfkJzWTMwharAo3bevFde/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">Resume</a>
           </div>
           <p className="text-slate-600 text-sm">
             © {new Date().getFullYear()} Devansh Manchanda.
