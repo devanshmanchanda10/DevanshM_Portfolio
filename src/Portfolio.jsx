@@ -110,7 +110,7 @@ const Portfolio = () => {
 
       {/* --- COMBINED HERO & EXPERIENCE SECTION --- */}
       {/* This section puts Intro on Left, Experience on Right immediately */}
-      <section id="home" className="pt-28 pb-12 px-6 relative min-h-screen flex flex-col justify-center">
+      <section id="home" className="pt-24 pb-8 px-6 relative min-h-screen flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
@@ -208,7 +208,7 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24 relative">
+      <section id="projects" className="py-16 relative">
         <div className="absolute inset-0 bg-white/40 skew-y-1 transform origin-top-left -z-10"></div>
         <div className="container mx-auto px-6 max-w-6xl">
           <SectionHeader title="Featured Projects" subtitle="Problem Solving" />
@@ -256,7 +256,7 @@ const Portfolio = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-24">
+      <section id="skills" className="py-16">
         <div className="container mx-auto px-6 max-w-6xl">
           <SectionHeader title="Technical Arsenal" subtitle="Skills & Tools" />
 
@@ -281,7 +281,7 @@ const Portfolio = () => {
       </section>
 
       {/* Education & POR */}
-      <section id="education" className="py-24 relative">
+      <section id="education" className="py-16 relative">
         <div className="absolute inset-0 bg-slate-50/50 -z-10"></div>
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12">
@@ -338,7 +338,7 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-16 border-t border-slate-800 relative overflow-hidden">
+      <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500"></div>
 
         <div className="container mx-auto px-6 max-w-5xl text-center relative z-10">
