@@ -386,9 +386,9 @@ const ExperienceCard = ({ role, company, period, type, achievements, icon, color
   };
 
   return (
-    <div className="group relative bg-white/60 backdrop-blur-lg p-8 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
-      <div className="flex flex-col md:flex-row md:items-start gap-6 mb-6">
-        <div className={`p-4 rounded-2xl ${colorClasses[color]} group-hover:scale-110 transition-transform duration-300 shadow-inner`}>
+    <div className="group relative bg-white/60 backdrop-blur-lg p-6 rounded-3xl border border-white/60 hover:border-blue-300/50 shadow-sm hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-1">
+      <div className="flex flex-col md:flex-row md:items-start gap-4 mb-4">
+        <div className={`p-3 rounded-2xl ${colorClasses[color]} group-hover:scale-110 transition-transform duration-300 shadow-inner`}>
           {icon}
         </div>
         <div className="flex-1">
@@ -401,7 +401,7 @@ const ExperienceCard = ({ role, company, period, type, achievements, icon, color
           </div>
         </div>
       </div>
-      <ul className="space-y-3 mb-6">
+      <ul className="space-y-3 mb-4">
         {achievements.map((item, idx) => (
           <li key={idx} className="flex items-start text-slate-700 leading-relaxed text-sm md:text-base">
             <span className="mt-2 mr-3 w-1.5 h-1.5 bg-blue-400/60 rounded-full flex-shrink-0 group-hover:bg-blue-600 transition-colors" />
@@ -409,7 +409,7 @@ const ExperienceCard = ({ role, company, period, type, achievements, icon, color
           </li>
         ))}
       </ul>
-      <div className="pt-6 border-t border-slate-200/50 flex items-center justify-between">
+      <div className="pt-4 border-t border-slate-200/50 flex items-center justify-between">
         <span className="text-[10px] font-bold px-3 py-1 bg-slate-100/50 text-slate-500 rounded-full uppercase tracking-wider">{type}</span>
       </div>
     </div>
