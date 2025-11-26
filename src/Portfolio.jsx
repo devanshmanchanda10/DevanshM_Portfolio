@@ -95,8 +95,8 @@ const Portfolio = () => {
                 key={item}
                 onClick={() => scrollToSection(item)}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 capitalize ${activeSection === item
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-blue-600 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-900'
                   }`}
               >
                 {item}
@@ -328,7 +328,7 @@ const Portfolio = () => {
           <div className="flex justify-center gap-6 mb-12">
             <a href="mailto:manchandadevansh10@gmail.com" className="text-slate-400 hover:text-white transition-colors">Email</a>
             <a href="https://www.linkedin.com/in/devansh-manchanda-dm1111/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">Resume</a>
+            <a href="https://drive.google.com/file/d/1p_kU5biULGlgfkJzWTMwharAo3bevFde/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Resume</a>
           </div>
           <p className="text-sm font-medium opacity-60">
             © {new Date().getFullYear()} Devansh Manchanda.
