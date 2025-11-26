@@ -367,3 +367,5 @@ const LeadershipCard = ({ role, org, desc }) => (
     <p className="text-slate-600 text-sm leading-relaxed mt-3">{desc}</p>
   </div>
 );
+
+export default Portfolio;
